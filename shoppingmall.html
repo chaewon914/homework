@@ -20,26 +20,49 @@
     crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css?family=Sunflower:300&display=swap" rel="stylesheet">
 
-  <style>
-    * {
-      font-family: 'Sunflower', sans-serif;
+  <link rel="stylesheet" type="text/css" href="hwstyle.css">
+
+  <script>
+    function check_number(num){
+        var regExp= /^(01[0|1|6|7|8|9]{1}|02|0[3-9]{1}[0-9]{1})[-][0-9]{3,4}[-][0-9]{4}$/;
+          return regExp.test(num);}       
+        
+    function order() {
+      let ord_name = $('#name').val();
+      let ord_count = $('#count').val();
+      let ord_address = $('#address').val();
+      let ord_number = $('#number').val();
+      if (ord_name == '') {
+        alert("이름을 입력해주세요.");
+        $('#name').focus()
+      }
+      else if (ord_count == '--수량을 선택하세요--') {
+        alert("수량을 입력해주세요.");
+        $('#count').focus()
+      }
+      else if (ord_address == '') {
+        alert("주소를 입력해주세요.");
+        $('#address').focus()
+      }
+      else if (ord_number == '') {
+        alert("번호를 입력해주세요.");
+        $('#number').focus()
+      }
+      else if (!check_number(number)){
+          alert("잘못된 번호입니다. -를 포함한 숫자만 입력하세요.");
+      }
+      else {
+        let temp_html = '<tr>' + '<td>' + ord_name + '</td>' + '<td>' + ord_count + '</td>' + '<td>' + ord_address + '</td>' + '<td>' + ord_number + '</td>' + '</tr>'
+        $('#order_list').append(temp_html)
+        $('#name').val('')
+        $('#count').val('')
+        $('#address').val('')
+        $('#number').val('')
+      }
     }
 
-    #image {
-      width: 500px;
-      margin: 0 auto 0 100px;
-    }
-
-    .wrapper {
-      width: 700px;
-      margin: 0 auto 100px auto;
-    }
-
-    #btn {
-      margin: auto 300px auto 300px;
-    }
-  </style>
-
+  
+  </script>
 
 </head>
 
@@ -61,7 +84,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="inputGroup-sizing-default">주문자 이름:</span>
       </div>
-      <input type="text" class="form-control" aria-label="Sizing example input"
+      <input id='name' type="text" class="form-control" aria-label="Sizing example input"
         aria-describedby="inputGroup-sizing-default">
     </div>
 
@@ -70,7 +93,7 @@
       <div class="input-group-prepend">
         <label class="input-group-text" for="inputGroupSelect01">수량</label>
       </div>
-      <select class="custom-select" id="inputGroupSelect01">
+      <select id='count' class="custom-select" id="inputGroupSelect01">
         <option selected>--수량을 선택하세요--</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -83,7 +106,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="inputGroup-sizing-default">주소</span>
       </div>
-      <input type="text" class="form-control" aria-label="Sizing example input"
+      <input id="address" type="text" class="form-control" aria-label="Sizing example input"
         aria-describedby="inputGroup-sizing-default">
     </div>
 
@@ -92,14 +115,28 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="inputGroup-sizing-default">전화번호</span>
       </div>
-      <input type="text" class="form-control" aria-label="Sizing example input"
+      <input id='number' type="text" class="form-control" aria-label="Sizing example input"
         aria-describedby="inputGroup-sizing-default">
     </div>
 
     <!-- 주문하기버튼 -->
-    <button id='btn' type="button" class="btn btn-outline-info">주문하기</button>
+    <button onclick="order();" id='btn' type="button" class="btn btn-outline-info">주문하기</button>
+
   </div>
 
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">이름</th>
+        <th scope="col">수량</th>
+        <th scope="col">주소</th>
+        <th scope="col">전화번호</th>
+      </tr>
+    </thead>
+    <tbody id='order_list'>
+
+    </tbody>
+  </table>
 
 
 </body>
